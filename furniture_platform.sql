@@ -27,8 +27,6 @@ USE `furniture_platform`;
 
 -- --------------------------------------------------------
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `meubles`
 --
@@ -37,7 +35,7 @@ DROP TABLE IF EXISTS `meubles`;
 CREATE TABLE `meubles` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(255) NOT NULL,
-  `prix` varchar(255) NOT NULL,
+  `prix` int(10) UNSIGNED NOT NULL,
   `hauteur` int(10) UNSIGNED NOT NULL,
   `largeur` int(10) UNSIGNED NOT NULL,
   `profondeur` int(10) UNSIGNED NOT NULL,
@@ -49,6 +47,7 @@ CREATE TABLE `meubles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
 
 --
 -- Table structure for table `personne`
@@ -73,8 +72,8 @@ CREATE TABLE `personne` (
 DROP TABLE IF EXISTS `vendeur`;
 CREATE TABLE `vendeur` (
   `id` int(10) UNSIGNED NOT NULL,
-  `personne_id` int(10) NOT NULL,
-  `meubles_id` int(10) NOT NULL
+  `personne_id` int(10) UNSIGNED NOT NULL,
+  `meubles_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -85,8 +84,8 @@ CREATE TABLE `vendeur` (
 DROP TABLE IF EXISTS `acheteur`;
 CREATE TABLE `acheteur` (
   `id` int(10) UNSIGNED NOT NULL,
-  `personne_id` int(10) NOT NULL,
-  `meubles_id` int(10) NOT NULL
+  `personne_id` int(10) UNSIGNED NOT NULL,
+  `meubles_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

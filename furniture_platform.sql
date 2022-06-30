@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 30, 2022 at 09:05 AM
+-- Generation Time: Jun 28, 2022 at 10:13 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -22,17 +22,8 @@ SET time_zone = "+00:00";
 -- Database: `furniture_platform`
 --
 
--- --------------------------------------------------------
-
---
--- Table structure for table `acheteur`
---
-
-CREATE TABLE `acheteur` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `personne_id` int(10) UNSIGNED NOT NULL,
-  `meubles_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE DATABASE IF NOT EXISTS `furniture_platform` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `furniture_platform`;
 
 -- --------------------------------------------------------
 
@@ -40,9 +31,9 @@ CREATE TABLE `acheteur` (
 -- Table structure for table `meubles`
 --
 
+DROP TABLE IF EXISTS `meubles`;
 CREATE TABLE `meubles` (
   `id` int(10) UNSIGNED NOT NULL,
-  `categorie` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `prix` int(10) UNSIGNED NOT NULL,
   `hauteur` int(10) UNSIGNED NOT NULL,
@@ -54,6 +45,8 @@ CREATE TABLE `meubles` (
   `photo2` varchar(255) NOT NULL,
   `photo3` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
 
 --
 -- Dumping data for table `meubles`
@@ -71,6 +64,7 @@ INSERT INTO `meubles` (`id`, `categorie`, `type`, `prix`, `hauteur`, `largeur`, 
 -- Table structure for table `personne`
 --
 
+DROP TABLE IF EXISTS `personne`;
 CREATE TABLE `personne` (
   `id` int(10) UNSIGNED NOT NULL,
   `nom` varchar(255) NOT NULL,
@@ -86,7 +80,20 @@ CREATE TABLE `personne` (
 -- Table structure for table `vendeur`
 --
 
+DROP TABLE IF EXISTS `vendeur`;
 CREATE TABLE `vendeur` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `personne_id` int(10) UNSIGNED NOT NULL,
+  `meubles_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--
+-- Table structure for table `vendeur`
+--
+
+DROP TABLE IF EXISTS `acheteur`;
+CREATE TABLE `acheteur` (
   `id` int(10) UNSIGNED NOT NULL,
   `personne_id` int(10) UNSIGNED NOT NULL,
   `meubles_id` int(10) UNSIGNED NOT NULL
@@ -95,14 +102,6 @@ CREATE TABLE `vendeur` (
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `acheteur`
---
-ALTER TABLE `acheteur`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_personne_acheteur_id` (`personne_id`),
-  ADD KEY `fk_meubles_acheteur_id` (`meubles_id`);
 
 --
 -- Indexes for table `meubles`
@@ -124,21 +123,20 @@ ALTER TABLE `vendeur`
   ADD KEY `fk_personne_vendeur_id` (`personne_id`),
   ADD KEY `fk_meubles_vendeur_id` (`meubles_id`);
 
+ALTER TABLE `acheteur`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_personne_acheteur_id` (`personne_id`),
+  ADD KEY `fk_meubles_acheteur_id` (`meubles_id`);
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `acheteur`
---
-ALTER TABLE `acheteur`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `meubles`
 --
 ALTER TABLE `meubles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personne`
@@ -147,29 +145,50 @@ ALTER TABLE `personne`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `acheteur`
+--
+ALTER TABLE `acheteur`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `vendeur`
 --
 ALTER TABLE `vendeur`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `acheteur`
---
-ALTER TABLE `acheteur`
-  ADD CONSTRAINT `fk_meubles_acheteur_id` FOREIGN KEY (`meubles_id`) REFERENCES `meubles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_personne_acheteur_id` FOREIGN KEY (`personne_id`) REFERENCES `personne` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `vendeur`
---
-ALTER TABLE `vendeur`
-  ADD CONSTRAINT `fk_meubles_vendeur_id` FOREIGN KEY (`meubles_id`) REFERENCES `meubles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_personne_vendeur_id` FOREIGN KEY (`personne_id`) REFERENCES `personne` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
+
+
+
+
+-- AJOUT FOREIGN KEYS POUR LIER LES TABLES  
+
+ALTER TABLE `vendeur` 
+  ADD CONSTRAINT `fk_personne_vendeur_id` FOREIGN KEY (`personne_id`) 
+  REFERENCES `personne`(`id`) 
+  ON DELETE NO ACTION 
+  ON UPDATE NO ACTION;
+
+
+ALTER TABLE `vendeur` 
+  ADD CONSTRAINT `fk_meubles_vendeur_id` FOREIGN KEY (`meubles_id`) 
+  REFERENCES `meubles`(`id`)  
+  ON DELETE NO ACTION 
+  ON UPDATE NO ACTION;
+
+
+ALTER TABLE `acheteur` 
+  ADD CONSTRAINT `fk_personne_acheteur_id` FOREIGN KEY (`personne_id`) 
+  REFERENCES `personne`(`id`)
+  ON DELETE NO ACTION 
+  ON UPDATE NO ACTION;
+
+
+ALTER TABLE `acheteur` 
+  ADD CONSTRAINT `fk_meubles_acheteur_id` FOREIGN KEY (`meubles_id`) 
+  REFERENCES `meubles`(`id`)  
+  ON DELETE NO ACTION 
+  ON UPDATE NO ACTION;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

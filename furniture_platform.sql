@@ -34,6 +34,7 @@ USE `furniture_platform`;
 DROP TABLE IF EXISTS `meubles`;
 CREATE TABLE `meubles` (
   `id` int(10) UNSIGNED NOT NULL,
+  `categorie` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `prix` int(10) UNSIGNED NOT NULL,
   `hauteur` int(10) UNSIGNED NOT NULL,

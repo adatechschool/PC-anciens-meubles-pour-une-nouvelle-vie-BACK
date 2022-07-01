@@ -71,7 +71,7 @@ CREATE TABLE `personne` (
   `nom` varchar(255) NOT NULL,
   `pseudo` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
-  `mot de passe` varchar(255) NOT NULL,
+  `mot_de_passe` varchar(255) NOT NULL,
   `adresse` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

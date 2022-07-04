@@ -25,6 +25,12 @@ const {
 } = require('../controllers/delete_controllers'); 
 
 
+//Import update controllers 
+const {
+    updateAFurniture
+} = require('../controllers/update_controllers'); 
+
+
 //Récupérer tous les meubles 
 router.get('/meubles', async (req, res, next) => {
     //res.json({ test : 'test' }); 
@@ -109,7 +115,26 @@ router.post('/signup', async (req, res, next) => {
 
 //Update un meuble : baisser le stock, modifier les infos ? 
 
-
+router.put('/meubles/:id', async (req, res, next) => {
+    try {
+        const categorie = req.body.categorie;
+        const type = req.body.type; 
+        const prix = req.body.prix;
+        const etat = req.body.etat; 
+        const hauteur = req.body.hauteur;
+        const largeur = req.body.largeur; 
+        const profondeur = req.body.profondeur; 
+        const matiere = req.body.matiere; 
+        const couleur = req.body.couleur; 
+        const photo1 = req.body.photo1; 
+        const photo2 = req.body.photo2; 
+        const photo3 = req.body.photo3; 
+        updateAFurniture(categorie, type, prix, etat, hauteur, largeur, profondeur, matiere, couleur, photo1, photo2, photo3, req.params.id);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
 
 //Delete un meuble 
 router.delete('/meubles/:id', async (req, res, next) => {

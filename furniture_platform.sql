@@ -37,6 +37,7 @@ CREATE TABLE `meubles` (
   `categorie` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `prix` int(10) UNSIGNED NOT NULL,
+  `etat` varchar(255) NOT NULL,
   `hauteur` int(10) UNSIGNED NOT NULL,
   `largeur` int(10) UNSIGNED NOT NULL,
   `profondeur` int(10) UNSIGNED NOT NULL,
@@ -53,11 +54,11 @@ CREATE TABLE `meubles` (
 -- Dumping data for table `meubles`
 --
 
-INSERT INTO `meubles` (`id`, `categorie`, `type`, `prix`, `hauteur`, `largeur`, `profondeur`, `matiere`, `couleur`, `photo1`, `photo2`, `photo3`) VALUES
-(1, 'Salon ', 'Buffet', 270, 75, 170, 45, 'Bois\r\n', 'Noir', 'https://i.ibb.co/VqSFGmk/buffet.jpg', '', ''),
-(2, 'Chambre', 'Armoire', 220, 190, 85, 41, 'Métal', 'Noir', 'https://i.ibb.co/K69q4WR/armoire-chambre.jpg', '', ''),
-(3, 'Cuisine', 'Meuble de cuisine', 600, 86, 180, 55, 'Bois', 'Marron', 'https://i.ibb.co/3hCCzxY/meuble-Cuisine.jpg', '', ''),
-(4, 'Décoration', 'Miroir', 150, 110, 93, 8, 'Bois', 'Marron', '\"https://i.ibb.co/vZKVNnS/miroir.jpg\"', '', '');
+INSERT INTO `meubles` (`id`, `categorie`, `type`, `prix`, `etat`, `hauteur`, `largeur`, `profondeur`, `matiere`, `couleur`, `photo1`, `photo2`, `photo3`) VALUES
+(1, 'Salon ', 'Buffet', 270, 'Comme neuf', 75, 170, 45, 'Bois', 'Noir', 'https://i.ibb.co/VqSFGmk/buffet.jpg', '', ''),
+(2, 'Chambre', 'Armoire', 220, 'Bon état', 190, 85, 41, 'Métal', 'Noir', 'https://i.ibb.co/K69q4WR/armoire-chambre.jpg', '', ''),
+(3, 'Cuisine', 'Meuble de cuisine', 600, 'Très bon état', 86, 180, 55, 'Bois', 'Marron', 'https://i.ibb.co/3hCCzxY/meuble-Cuisine.jpg', '', ''),
+(4, 'Décoration', 'Miroir', 150, 'Passable', 110, 93, 8, 'Bois', 'Marron', '\"https://i.ibb.co/vZKVNnS/miroir.jpg\"', '', '');
 
 -- --------------------------------------------------------
 
@@ -69,9 +70,8 @@ DROP TABLE IF EXISTS `personne`;
 CREATE TABLE `personne` (
   `id` int(10) UNSIGNED NOT NULL,
   `nom` varchar(255) NOT NULL,
-  `pseudo` varchar(255) NOT NULL,
   `mail` varchar(255) NOT NULL,
-  `mot_de_passe` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `adresse` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

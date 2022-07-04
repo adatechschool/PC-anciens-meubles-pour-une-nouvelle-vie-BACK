@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json()); 
 
 //Indication de la route de base à utiliser 
-app.use('/api/furnitures', apiRouter); 
+app.use('/', apiRouter); 
 
 //we listen on a port 
 app.listen(process.env.PORT || '3001', () => {

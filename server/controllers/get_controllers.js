@@ -1,11 +1,12 @@
 //Controllers : planification de la construction des routes. Ces fonctions vont être appelées dans le fichier du dossier routes. 
 
 const mysql = require('mysql'); 
+
 //On récupère la connexion db (comme du include dans PHP)
 const pool = require('../db/connection_db')
 
 
-//Structure des fonctions : aller voir Clotilde pour la leçon paramètre/argument 
+//Structure des fonctions : 
 /*
 const nomdelafonction = (parametre) => {
     return new Promise((resolve, reject) => {
@@ -34,6 +35,7 @@ const getAllFurnitures = () => {
         })
     }); 
 }
+
 
 //Afficher un meuble (en fonction de son id)
 const getAFurniture = (id) => {

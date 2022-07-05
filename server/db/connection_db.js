@@ -7,7 +7,7 @@ const pool = mysql.createPool({
     user: "root",
     password: "root", //Vérifier votre mdp 
     database: "furniture_platform",
-    port: "8889", //Vérifier le port de votre serveur PHPMYADMIN
+    port: "3306", //Vérifier le port de votre serveur PHPMYADMIN
     //socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
 });
 

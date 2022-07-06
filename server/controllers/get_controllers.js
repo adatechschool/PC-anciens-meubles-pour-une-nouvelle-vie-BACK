@@ -36,6 +36,31 @@ const getAllFurnitures = () => {
     }); 
 }
 
+//Afficher les acheteurs
+const getAcheteur = () => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM acheteur', (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+
+            return resolve(results); 
+        })
+    }); 
+}
+
+//Afficher les vendeurs
+const getVendeur = () => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM vendeur', (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+
+            return resolve(results); 
+        })
+    }); 
+}
 
 //Afficher un meuble (en fonction de son id)
 const getAFurniture = (id) => {
@@ -72,6 +97,8 @@ const getFurnitureByCat = (category) => {
 module.exports = {
     getAllFurnitures,
     getAFurniture,
-    getFurnitureByCat
+    getFurnitureByCat,
+    getAcheteur,
+    getVendeur
 }
 

@@ -29,7 +29,33 @@ const postAPersonProfile = (name, email, password, adresse) => {
 }
 
 
+const postAcheteur = (personne_id, meubles_id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('INSERT INTO acheteur (personne_id, meubles_id) VALUES (?, ?)', [personne_id, meubles_id], (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+
+            return resolve(results); 
+        })
+    }); 
+}
+
+const postVendeur = (personne_id, meubles_id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('INSERT INTO vendeur (personne_id, meubles_id) VALUES (?, ?)', [personne_id, meubles_id], (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+
+            return resolve(results); 
+        })
+    }); 
+}
+
 module.exports = {
     postAFurniture,
-    postAPersonProfile
+    postAPersonProfile,
+    postAcheteur,
+    postVendeur
 }

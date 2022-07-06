@@ -12,6 +12,19 @@ const updateAFurniture = (categorie, type, prix, etat, hauteur, largeur, profond
     }); 
 }
 
+const updatePersonne = (id, nom, mail, password, adresse) => {
+    return new Promise((resolve, reject) => {
+        pool.query('UPDATE personne SET nom = ?, mail = ?, password = ?, adresse = ? WHERE id= ?;', [nom, mail, password, adresse, id], (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+            return resolve(results); 
+        })
+    }); 
+}
+
+
 module.exports = {
-    updateAFurniture
+    updateAFurniture,
+    updatePersonne
 }

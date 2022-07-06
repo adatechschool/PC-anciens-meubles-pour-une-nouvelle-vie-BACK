@@ -15,7 +15,9 @@ const {
 //Import POST controllers 
 const {
     postAFurniture,
-    postAPersonProfile
+    postAPersonProfile,
+    postAcheteur,
+    postVendeur
 } = require('../controllers/post_controllers');
 
 
@@ -27,7 +29,7 @@ const {
 
 //Import update controllers 
 const {
-    updateAFurniture
+    updateAFurniture, updatePersonne
 } = require('../controllers/update_controllers'); 
 
 
@@ -93,7 +95,7 @@ router.post('/meubles/post', async (req, res, next) => {
 });
 
 
-//Création d'un nouveau user 
+//Création d'un nouveau user ("personne")
 router.post('/signup', async (req, res, next) => {
     try {
         // chacune des variables récupère une partie des infos envoyées depuis le front 
@@ -110,7 +112,28 @@ router.post('/signup', async (req, res, next) => {
 
 
 //Nouvel achat : nouveau acheteur + nouveau vendeur ? 
+router.post('/acheteur/post', async (req, res, next) => {
+    try {
+        const personne_id = req.body.name;
+        const meubles_id = req.body.email;
+        postAcheteur(personne_id, meubles_id) 
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
 
+//route vendeur
+router.post('/vendeur/post', async (req, res, next) => {
+    try {
+        const personne_id = req.body.name;
+        const meubles_id = req.body.email;
+        postVendeur(personne_id, meubles_id) 
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
 
 
 //Update un meuble : baisser le stock, modifier les infos ? 
@@ -130,6 +153,22 @@ router.put('/meubles/:id', async (req, res, next) => {
         const photo2 = req.body.photo2; 
         const photo3 = req.body.photo3; 
         updateAFurniture(categorie, type, prix, etat, hauteur, largeur, profondeur, matiere, couleur, photo1, photo2, photo3, req.params.id);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+//Update une personne
+router.put('/personne/:id', async (req, res, next) => {
+    try {
+        // chacune des variables récupère une partie des infos envoyées depuis le front 
+        const id = req.body.id
+        const name = req.body.name;
+        const email = req.body.email;
+        const password = req.body.password;
+        const adresse = req.body.adresse; 
+        updatePersonne(id, name, email, password, adresse) // appel de la fonction de controller ici avec les variables définies juste au dessus
     } catch (e) {
         console.log(e);
         res.sendStatus(500);

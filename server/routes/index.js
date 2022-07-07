@@ -124,12 +124,12 @@ router.post('/signup', async (req, res, next) => {
 });
 
 
-//Nouvel achat : nouveau acheteur + nouveau vendeur ? 
+//Nouvel achat : nouveau acheteur
 router.post('/acheteur/post', async (req, res, next) => {
     try {
-        const personne_id = req.body.name;
-        const meubles_id = req.body.email;
-        postAcheteur(personne_id, meubles_id) 
+        const personne_id = req.body.personne_id;
+        const meubles_id = req.body.meubles_id;
+        postAcheteur(personne_id, meubles_id)
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
@@ -139,8 +139,8 @@ router.post('/acheteur/post', async (req, res, next) => {
 //route vendeur
 router.post('/vendeur/post', async (req, res, next) => {
     try {
-        const personne_id = req.body.name;
-        const meubles_id = req.body.email;
+        const personne_id = req.body.personne_id;
+        const meubles_id = req.body.meubles_id;
         postVendeur(personne_id, meubles_id) 
     } catch (e) {
         console.log(e);

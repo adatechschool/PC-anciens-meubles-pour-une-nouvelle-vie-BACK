@@ -36,6 +36,19 @@ const getAllFurnitures = () => {
     }); 
 }
 
+//Afficher toutes les personnes
+const getPersonne = () => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM personne', (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+
+            return resolve(results); 
+        })
+    }); 
+}
+
 //Afficher les acheteurs
 const getAcheteur = () => {
     return new Promise((resolve, reject) => {
@@ -99,6 +112,7 @@ module.exports = {
     getAFurniture,
     getFurnitureByCat,
     getAcheteur,
-    getVendeur
+    getVendeur,
+    getPersonne
 }
 

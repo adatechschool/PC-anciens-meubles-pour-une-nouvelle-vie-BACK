@@ -8,7 +8,8 @@ const router = express.Router();
 const {
     getAllFurnitures,
     getAFurniture,
-    getFurnitureByCat
+    getFurnitureByCat,
+    getPersonne
 } = require('../controllers/get_controllers');
 
 
@@ -23,7 +24,7 @@ const {
 
 //Import delete controllers 
 const {
-    deleteAFurniture
+    deleteAFurniture, deletePersonne
 } = require('../controllers/delete_controllers'); 
 
 
@@ -38,6 +39,18 @@ router.get('/meubles', async (req, res, next) => {
     //res.json({ test : 'test' }); 
     try {
         let results = await getAllFurnitures();
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+//Récupérer toutes les personnes
+router.get('/personne', async (req, res, next) => {
+    //res.json({ test : 'test' }); 
+    try {
+        let results = await getPersonne();
         res.json(results);
     } catch (e) {
         console.log(e);
@@ -111,12 +124,12 @@ router.post('/signup', async (req, res, next) => {
 });
 
 
-//Nouvel achat : nouveau acheteur + nouveau vendeur ? 
+//Nouvel achat : nouveau acheteur
 router.post('/acheteur/post', async (req, res, next) => {
     try {
-        const personne_id = req.body.name;
-        const meubles_id = req.body.email;
-        postAcheteur(personne_id, meubles_id) 
+        const personne_id = req.body.personne_id;
+        const meubles_id = req.body.meubles_id;
+        postAcheteur(personne_id, meubles_id)
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
@@ -126,8 +139,8 @@ router.post('/acheteur/post', async (req, res, next) => {
 //route vendeur
 router.post('/vendeur/post', async (req, res, next) => {
     try {
-        const personne_id = req.body.name;
-        const meubles_id = req.body.email;
+        const personne_id = req.body.personne_id;
+        const meubles_id = req.body.meubles_id;
         postVendeur(personne_id, meubles_id) 
     } catch (e) {
         console.log(e);
@@ -138,7 +151,7 @@ router.post('/vendeur/post', async (req, res, next) => {
 
 //Update un meuble : baisser le stock, modifier les infos ? 
 
-router.put('/meubles/:id', async (req, res, next) => {
+router.put('/meubles/put/:id', async (req, res, next) => {
     try {
         const categorie = req.body.categorie;
         const type = req.body.type; 
@@ -160,7 +173,7 @@ router.put('/meubles/:id', async (req, res, next) => {
 });
 
 //Update une personne
-router.put('/personne/:id', async (req, res, next) => {
+router.put('/personne/put/:id', async (req, res, next) => {
     try {
         // chacune des variables récupère une partie des infos envoyées depuis le front 
         const id = req.body.id
@@ -176,9 +189,20 @@ router.put('/personne/:id', async (req, res, next) => {
 });
 
 //Delete un meuble 
-router.delete('/meubles/:id', async (req, res, next) => {
+router.delete('/meubles/delete/:id', async (req, res, next) => {
     try {
         let results = await deleteAFurniture(req.params.id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+//Delete une personne
+router.delete('/personne/:id', async (req, res, next) => {
+    try {
+        let results = await deletePersonne(req.params.id);
         res.json(results);
     } catch (e) {
         console.log(e);

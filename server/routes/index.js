@@ -225,10 +225,10 @@ router.delete('/panier/delete/:id', async (req, res, next) => {
     }
 });
 
-router.get('/panier', async (req, res, next) => {
+router.get('/panier/:id', async (req, res, next) => {
     //res.json({ test : 'test' }); 
     try {
-        let results = await getBasket();
+        let results = await getBasket(req.params.id);
         res.json(results);
     } catch (e) {
         console.log(e);
@@ -255,7 +255,7 @@ const app = express();
 // http://localhost:3001/
 app.get('/', function(request, response) {
 	// Render login template
-	response.sendFile(path.join(__dirname + '/login.vue'));
+	response.sendFile(path.join(__dirname + '/login.html'));
 });
 
 // http://localhost:3001/auth

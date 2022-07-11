@@ -75,9 +75,9 @@ const getVendeur = () => {
     }); 
 }
 
-const getBasket = () => {
+const getBasket = (personne_id) => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM panier', (err, results) => {
+        pool.query('SELECT * FROM panier WHERE personne_id = ?', [personne_id], (err, results) => {
             if(err) {
                 return reject(err); 
             }

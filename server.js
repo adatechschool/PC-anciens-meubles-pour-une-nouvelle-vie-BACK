@@ -2,6 +2,7 @@ const express = require('express');
 //on importe le rooter
 const apiRouter = require('./server/routes');
 const cors = require('cors');
+//Session 
 const app = express();
 const session = require('express-session');
 const path = require('path');
@@ -19,6 +20,8 @@ app.listen(process.env.PORT || '3001', () => {
     console.log(`Server is running on : ${process.env.PORT || '3001'}`); 
 }); 
 
+
+//Login
 app.use(session({
 	secret: 'secret',
 	resave: true,

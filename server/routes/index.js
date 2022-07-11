@@ -247,6 +247,7 @@ router.post('/panier/post', async (req, res, next) => {
     }
 });
 
+
 //A partir de là, c'est le login
 
 const app = express();
@@ -254,7 +255,7 @@ const app = express();
 // http://localhost:3001/
 app.get('/', function(request, response) {
 	// Render login template
-	response.sendFile(path.join(__dirname + '/login.html'));
+	response.sendFile(path.join(__dirname + '/login.vue'));
 });
 
 // http://localhost:3001/auth

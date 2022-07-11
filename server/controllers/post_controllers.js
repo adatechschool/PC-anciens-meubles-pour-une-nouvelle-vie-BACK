@@ -53,9 +53,24 @@ const postVendeur = (personne_id, meubles_id) => {
     }); 
 }
 
+const postBasket = (personne_id, meubles_id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('INSERT INTO panier (personne_id, meubles_id) VALUES (?, ?)', [personne_id, meubles_id], (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+
+            return resolve(results); 
+        })
+    }); 
+}
+
+
+
 module.exports = {
     postAFurniture,
     postAPersonProfile,
     postAcheteur,
-    postVendeur
+    postVendeur,
+    postBasket
 }

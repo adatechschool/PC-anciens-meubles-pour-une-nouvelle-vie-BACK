@@ -9,7 +9,8 @@ const {
     getAllFurnitures,
     getAFurniture,
     getFurnitureByCat,
-    getPersonne
+    getPersonne,
+    getBasket
 } = require('../controllers/get_controllers');
 
 
@@ -18,19 +19,23 @@ const {
     postAFurniture,
     postAPersonProfile,
     postAcheteur,
-    postVendeur
+    postVendeur,
+    postBasket
 } = require('../controllers/post_controllers');
 
 
 //Import delete controllers 
 const {
-    deleteAFurniture, deletePersonne
+    deleteAFurniture,
+    deletePersonne,
+    deleteBasket
 } = require('../controllers/delete_controllers'); 
 
 
 //Import update controllers 
 const {
-    updateAFurniture, updatePersonne
+    updateAFurniture,
+    updatePersonne
 } = require('../controllers/update_controllers'); 
 
 
@@ -208,6 +213,90 @@ router.delete('/personne/:id', async (req, res, next) => {
         console.log(e);
         res.sendStatus(500);
     }
+});
+
+router.delete('/panier/delete/:id', async (req, res, next) => {
+    try {
+        let results = await deleteBasket(req.params.id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+router.get('/panier', async (req, res, next) => {
+    //res.json({ test : 'test' }); 
+    try {
+        let results = await getBasket();
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+router.post('/panier/post', async (req, res, next) => {
+    try {
+        const personne_id = req.body.personne_id;
+        const meubles_id = req.body.meubles_id;
+        postBasket(personne_id, meubles_id) 
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+//A partir de là, c'est le login
+
+const app = express();
+
+// http://localhost:3001/
+app.get('/', function(request, response) {
+	// Render login template
+	response.sendFile(path.join(__dirname + '/login.html'));
+});
+
+// http://localhost:3001/auth
+app.post('/auth', function(request, response) {
+	// Capture the input fields
+	let mail = request.body.mail;
+	let password = request.body.password;
+	// Ensure the input fields exists and are not empty
+	if (mail && password) {
+		// Execute SQL query that'll select the account from the database based on the specified email and password
+		connection.query('SELECT * FROM personne WHERE mail = ? AND password = ?', [mail, password], function(error, results, fields) {
+			// If there is an issue with the query, output the error
+			if (error) throw error;
+			// If the account exists
+			if (results.length > 0) {
+				// Authenticate the user
+				request.session.loggedin = true;
+				request.session.mail = mail;
+				// Redirect to home page
+				response.redirect('/home');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
+});
+
+// http://localhost:3001/home
+app.get('/home', function(request, response) {
+	// If the user is loggedin
+	if (request.session.loggedin) {
+		// Output username
+		response.send('Welcome back, ' + request.session.name + '!');
+	} else {
+		// Not logged in
+		response.send('Please login to view this page!');
+	}
+	response.end();
 });
 
 module.exports = router; 

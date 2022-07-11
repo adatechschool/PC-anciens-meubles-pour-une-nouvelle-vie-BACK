@@ -75,6 +75,18 @@ const getVendeur = () => {
     }); 
 }
 
+const getBasket = () => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM panier', (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+
+            return resolve(results); 
+        })
+    }); 
+}
+
 //Afficher un meuble (en fonction de son id)
 const getAFurniture = (id) => {
     return new Promise((resolve, reject) => {
@@ -104,6 +116,17 @@ const getFurnitureByCat = (category) => {
     }); 
 }
 
+// Test à la mano de fonction de login qui ne fonctionne pas (et c'est pas terminé)
+// const getLogin = (mail, password) => {
+//     return new Promise((resolve, reject) => {
+//         pool.query('SELECT mail FROM personne WHERE mail = ?', [mail], (err, results) => {
+//             if(this.mail == mail){
+//                 pool.query('SELECT password FROM personne WHERE ')
+//             }
+//         })
+//     })
+// }
+
 
 
 
@@ -113,6 +136,7 @@ module.exports = {
     getFurnitureByCat,
     getAcheteur,
     getVendeur,
-    getPersonne
+    getPersonne,
+    getBasket
 }
 

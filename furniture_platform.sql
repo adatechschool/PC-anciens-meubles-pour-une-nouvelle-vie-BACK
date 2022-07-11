@@ -58,7 +58,7 @@ INSERT INTO `meubles` (`id`, `categorie`, `type`, `prix`, `etat`, `hauteur`, `la
 (1, 'Salon ', 'Buffet', 270, 'Comme neuf', 75, 170, 45, 'Bois', 'Noir', 'https://i.ibb.co/VqSFGmk/buffet.jpg', '', ''),
 (2, 'Chambre', 'Armoire', 220, 'Bon état', 190, 85, 41, 'Métal', 'Noir', 'https://i.ibb.co/K69q4WR/armoire-chambre.jpg', '', ''),
 (3, 'Cuisine', 'Meuble de cuisine', 600, 'Très bon état', 86, 180, 55, 'Bois', 'Marron', 'https://i.ibb.co/3hCCzxY/meuble-Cuisine.jpg', '', ''),
-(4, 'Décoration', 'Miroir', 150, 'Passable', 110, 93, 8, 'Bois', 'Marron', '\"https://i.ibb.co/vZKVNnS/miroir.jpg\"', '', '');
+(4, 'Décoration', 'Miroir', 150, 'Passable', 110, 93, 8, 'Bois', 'Marron', 'https://i.ibb.co/vZKVNnS/miroir.jpg', '', '');
 
 -- --------------------------------------------------------
 
@@ -74,6 +74,15 @@ CREATE TABLE `personne` (
   `password` varchar(255) NOT NULL,
   `adresse` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Dumping data for table `personne`
+--
+
+INSERT INTO `personne` (`id`, `nom`, `mail`, `password`, `adresse`) VALUES
+(2, 'Dudu', 'dudu@ada.com', 'du', 'dodo');
 
 -- --------------------------------------------------------
 
@@ -100,6 +109,25 @@ CREATE TABLE `acheteur` (
   `meubles_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+--
+-- Table structure for table `panier`
+--
+
+CREATE TABLE `panier` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `personne_id` int(10) UNSIGNED NOT NULL,
+  `meubles_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `panier`
+--
+
+INSERT INTO `panier` (`id`, `personne_id`, `meubles_id`) VALUES
+(2, 2, 1);
+
+-- ---------------------------------------------------
 --
 -- Indexes for dumped tables
 --
@@ -130,6 +158,14 @@ ALTER TABLE `acheteur`
   ADD KEY `fk_meubles_acheteur_id` (`meubles_id`);
 
 --
+-- Indexes for table `panier`
+--
+ALTER TABLE `panier`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_persone_panier_id` (`personne_id`) USING BTREE,
+  ADD KEY `fk_meubles_panier_id` (`meubles_id`) USING BTREE;
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -158,7 +194,11 @@ ALTER TABLE `vendeur`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
-
+--
+-- AUTO_INCREMENT for table `panier`
+--
+ALTER TABLE `panier`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 
 -- AJOUT FOREIGN KEYS POUR LIER LES TABLES  
@@ -189,6 +229,13 @@ ALTER TABLE `acheteur`
   REFERENCES `meubles`(`id`)  
   ON DELETE NO ACTION 
   ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `panier`
+--
+ALTER TABLE `panier`
+  ADD CONSTRAINT `panier_ibfk_1` FOREIGN KEY (`personne_id`) REFERENCES `personne` (`id`),
+  ADD CONSTRAINT `panier_ibfk_2` FOREIGN KEY (`meubles_id`) REFERENCES `meubles` (`id`);
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

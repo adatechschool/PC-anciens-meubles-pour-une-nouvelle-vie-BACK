@@ -9,7 +9,8 @@ const {
     getAllFurnitures,
     getAFurniture,
     getFurnitureByCat,
-    getPersonne
+    getPersonne,
+    getBasket
 } = require('../controllers/get_controllers');
 
 
@@ -18,20 +19,26 @@ const {
     postAFurniture,
     postAPersonProfile,
     postAcheteur,
-    postVendeur
+    postVendeur,
+    postBasket,
+    postLog
 } = require('../controllers/post_controllers');
 
 
 //Import delete controllers 
 const {
-    deleteAFurniture, deletePersonne
+    deleteAFurniture,
+    deletePersonne,
+    deleteBasket
 } = require('../controllers/delete_controllers'); 
 
 
 //Import update controllers 
 const {
-    updateAFurniture, updatePersonne
+    updateAFurniture,
+    updatePersonne
 } = require('../controllers/update_controllers'); 
+const pool = require('../db/connection_db');
 
 
 //Récupérer tous les meubles 
@@ -208,6 +215,76 @@ router.delete('/personne/:id', async (req, res, next) => {
         console.log(e);
         res.sendStatus(500);
     }
+});
+
+router.delete('/panier/delete/:id', async (req, res, next) => {
+    try {
+        let results = await deleteBasket(req.params.id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+router.get('/panier/:id', async (req, res, next) => {
+    //res.json({ test : 'test' }); 
+    try {
+        let results = await getBasket(req.params.id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+router.post('/panier/post', async (req, res, next) => {
+    try {
+        const personne_id = req.body.personne_id;
+        const meubles_id = req.body.meubles_id;
+        postBasket(personne_id, meubles_id) 
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+
+//A partir de là, c'est le login
+
+//const app = express();
+
+// // http://localhost:3001/
+// app.get('/', function(request, response) {
+// 	// Render login template
+// 	response.sendFile(path.join(__dirname + ''));
+// });
+
+// http://localhost:3001/login
+	// Capture the input fields
+router.post('/login', async (req, res, next) => {
+        try {
+            const mail = req.body.mail;
+            const password = req.body.password;
+            postLog(res, req, mail, password) 
+        } catch (e) {
+            console.log(e);
+            res.sendStatus(500);
+        }
+    });	
+
+// http://localhost:3001/home
+router.get('/home', function(request, response) {
+	// If the user is loggedin
+	if (request.session.loggedin) {
+		// Output username
+		response.send('Welcome back, ' + request.session.name + '!');
+	} else {
+		// Not logged in
+		response.send('Please login to view this page!');
+	}
+	response.end();
 });
 
 module.exports = router; 

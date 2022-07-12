@@ -22,7 +22,19 @@ const deleteAFurniture = (id) => {
     }); 
 }
 
+const deleteBasket = (id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('DELETE FROM panier WHERE id = ?;', [id], (err, results) => {
+            if(err) {
+                return reject(err); 
+            }
+            return resolve(results); 
+        })
+    }); 
+}
+
 module.exports = {
     deleteAFurniture,
-    deletePersonne
+    deletePersonne,
+    deleteBasket
 }
